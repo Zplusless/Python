@@ -9,7 +9,6 @@ python3 -m doctest -v selection_sort.py
 For manual testing run:
 python selection_sort.py
 """
-from __future__ import print_function
 
 
 def selection_sort(collection):
@@ -31,26 +30,17 @@ def selection_sort(collection):
     """
 
     length = len(collection)
-    for i in range(length):
+    for i in range(length - 1):
         least = i
         for k in range(i + 1, length):
             if collection[k] < collection[least]:
                 least = k
-        collection[least], collection[i] = (
-            collection[i], collection[least]
-        )
+        if least != i:
+            collection[least], collection[i] = (collection[i], collection[least])
     return collection
 
 
-if __name__ == '__main__':
-    import sys
-    # For python 2.x and 3.x compatibility: 3.x has not raw_input builtin
-    # otherwise 2.x's input builtin function is too "smart"
-    if sys.version_info.major < 3:
-        input_function = raw_input
-    else:
-        input_function = input
-
-    user_input = input_function('Enter numbers separated by a comma:\n')
-    unsorted = [int(item) for item in user_input.split(',')]
+if __name__ == "__main__":
+    user_input = input("Enter numbers separated by a comma:\n").strip()
+    unsorted = [int(item) for item in user_input.split(",")]
     print(selection_sort(unsorted))
